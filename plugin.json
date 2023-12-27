@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Mesut",
+  "FriendlyName": "Product Price Manager",
+  "SystemName": "Mesut.ProductPriceManager",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.50" ],
+  "Author": "Mesut",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Mesut.ProductPriceManager.dll",
+  "Description": "This plugin allows you to update product prices based on categories or manufacturers"
+}

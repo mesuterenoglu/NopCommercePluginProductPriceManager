@@ -1,0 +1,87 @@
+﻿@model ConfigurationModel
+@inject ICategoryService categoryService;
+@inject IManufacturerService manufacturerService;
+@{
+    Layout = "_ConfigurePlugin";
+    var categories = await categoryService.GetAllCategoriesAsync();
+    var categoryModels = categories.Select(x => new CategoryModel { Id = x.Id, Name = x.Name });
+    var manufacturers = await manufacturerService.GetAllManufacturersAsync();
+    var manufacturerModels = manufacturers.Select(x => new ManufacturerModel { Id = x.Id, Name = x.Name });
+}
+<form asp-controller="ProductPriceManager" asp-action="Configure" method="post">
+    <div class="form-group row">
+        <div class="col-md-3 requirement-label-col">
+            <nop-label asp-for="SelectedManufacturers" />
+        </div>
+        <div class="col-md-9 requirement-data-col">
+            <div class="requirement-data-input">
+                <select asp-for="SelectedManufacturers" 
+                        asp-items="new SelectList(@manufacturerModels, 
+                                    nameof(ManufacturerModel.Id), 
+                                    nameof(ManufacturerModel.Name))" 
+                        class="form-control" 
+                        multiple></select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3 requirement-label-col">
+            <nop-label asp-for="SelectedCategories" />
+        </div>
+        <div class="col-md-9 requirement-data-col">
+            <div class="requirement-data-input">
+                <select asp-for="SelectedCategories" 
+                        asp-items="new SelectList(@categoryModels, 
+                                nameof(CategoryModel.Id), 
+                                nameof(CategoryModel.Name))" 
+                        class="form-control"
+                        multiple></select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3 requirement-label-col">
+            <label for="increasePrices">Increase Prices</label>
+        </div>
+        <div class="col-md-9 requirement-data-col">
+            <div class="requirement-data-input">
+                <input type="radio" 
+                    id="increasePrices" 
+                    name="priceAction" 
+                    value="IncreasePrices">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3 requirement-label-col">
+            <label for="reducePrices">Reduce Prices</label>
+        </div>
+        <div class="col-md-9 requirement-data-col">
+            <div class="requirement-data-input">
+                <input type="radio" 
+                    id="reducePrices" 
+                    name="priceAction" 
+                    value="ReducePrices">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-3 requirement-label-col">
+            <label for="percentage">Percentage (0-100)</label>
+        </div>
+        <div class="col-md-9 requirement-data-col">
+            <div class="requirement-data-input">
+                <input type="number" 
+                    id="percentage" 
+                    name="Percentage" 
+                    min="1" 
+                    max="999"
+                    value="@Model.Percentage"/>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
